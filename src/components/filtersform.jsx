@@ -10,7 +10,9 @@ const Filters = ({ categories, setFilters }) => {
         setFilters((currentFitlers) => ({ ...currentFitlers, categories: [e] }))
     }
 
-    const onAuthorChange = (e) => console.log(e)
+    const onAuthorChange = (e) => {
+        setFilters((currentFitlers) => ({ ...currentFitlers, author: e.target.value }))
+    }
     const onPageChange = (e) => console.log(e)
 
     const generateRadioButtons = (items) => {
@@ -40,7 +42,7 @@ const Filters = ({ categories, setFilters }) => {
                 <Card aria-roledescription="Filter Form" fluid selected>
                     <Form >
                         <Form.RadioGroup label="Categories" vertical items={generateRadioButtons(categories)} />
-                        <Form.Dropdown label="Author" items={['prague', 'new york']} onChange={onAuthorChange} />
+                        <Form.Input label="Author" type='text' onChange={onAuthorChange} />
                         <Form.Slider label="Articles/Page" name="articles_num" onChange={onPageChange} />
                     </Form>
                 </Card>),

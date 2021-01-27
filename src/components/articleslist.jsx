@@ -53,7 +53,7 @@ const ArticleList = ({ filters }) => {
                     const hasCat = filters.categories.length > 0
                     const hasAuth = filters.author
                     let result = true;
-                    if ((hasCat && !filters.categories.includes(article.category_id)) || (hasAuth && !article.author.includes(filters.author))) {
+                    if ((hasCat && !filters.categories.includes(article.category_id)) || (hasAuth && !article.user.name.toLowerCase().includes(filters.author.toLowerCase()))) {
                         result = false
                     }
                     return result
