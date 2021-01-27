@@ -4,7 +4,7 @@ import { camel2Sentence } from '../utils/capitalise'
 
 
 
-const Filters = ({ categories, setFilters }) => {
+const Filters = ({ categories, setFilters, filters }) => {
 
     const onCategoryChange = (e) => {
         setFilters((currentFitlers) => ({ ...currentFitlers, categories: [e] }))
@@ -13,7 +13,9 @@ const Filters = ({ categories, setFilters }) => {
     const onAuthorChange = (e) => {
         setFilters((currentFitlers) => ({ ...currentFitlers, author: e.target.value }))
     }
-    const onPageChange = (e) => console.log(e)
+    const onPageChange = (e) => {
+        setFilters((currentFitlers) => ({ ...currentFitlers, pages: e.target.value }))
+    }
 
     const generateRadioButtons = (items) => {
         const radioButtons = [];
@@ -43,7 +45,7 @@ const Filters = ({ categories, setFilters }) => {
                     <Form >
                         <Form.RadioGroup label="Categories" vertical items={generateRadioButtons(categories)} />
                         <Form.Input label="Author" type='text' onChange={onAuthorChange} />
-                        <Form.Slider label="Articles/Page" name="articles_num" onChange={onPageChange} />
+                        <Form.Slider label={"Articles/Page: " + filters.pages} name="articles_num" onChange={onPageChange} />
                     </Form>
                 </Card>),
         },

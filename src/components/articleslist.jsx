@@ -58,7 +58,7 @@ const ArticleList = ({ filters }) => {
                     }
                     return result
                 }
-            ).map((article) => (
+            ).slice(0, filters.pages).map((article) => (
                 <Card fluid>
                     <Card.Header>
                         <Text content={article.title} weight="bold" />

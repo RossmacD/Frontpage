@@ -16,7 +16,7 @@ import { LoginPage } from '../../pages/LoginPage'
 
 function App() {
   const [categories, setCategories] = useState([])
-  const [filters, setFilters] = useState({ categories: [] })
+  const [filters, setFilters] = useState({ categories: [], filters: 100 })
   useEffect(() => {
     getCategories((data) => {
       setCategories(data)
@@ -33,7 +33,7 @@ function App() {
               <LoginPage />
             </Route>
             <Route path="/">
-              <Filters categories={categories} setFilters={setFilters} />
+              <Filters categories={categories} setFilters={setFilters} filters={filters} />
               <ArticleList filters={filters}></ArticleList>
             </Route>
           </Switch>
