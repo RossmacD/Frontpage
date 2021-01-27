@@ -26,15 +26,15 @@ import { Grid, Card, Text, Flex } from '@fluentui/react-northstar'
 //         content: 'Program the sensor to the SAS alarm through the haptic SQL card!',
 //     }
 // ]
-const ArticleList = () => {
+const ArticleList = ({ filters }) => {
     const [listArticles, setListArticles] = useState([])
 
-    const mapArticlesToList = (data) => data.map(({ id, title, body, created_at }) => ({
-        key: id,
-        header: title,
-        headerMedia: created_at,
-        content: body
-    }))
+    // const mapArticlesToList = (data) => data.map(({ id, title, body, created_at }) => ({
+    //     key: id,
+    //     header: title,
+    //     headerMedia: created_at,
+    //     content: body
+    // }))
 
 
     useEffect(() => {
@@ -48,7 +48,17 @@ const ArticleList = () => {
 
     return (
         <Flex column gap="gap.medium">
-            {listArticles.map((article) => (
+            {listArticles.filter(
+                (article) => {
+                    const hasCat = filters.categories.length > 0
+                    const hasAuth = filters.author
+                    let result = true;
+                    if ((hasCat && !filters.categories.includes(article.category_id)) || (hasAuth && !article.author.includes(filters.author))) {
+                        result = false
+                    }
+                    return result
+                }
+            ).map((article) => (
                 <Card fluid>
                     <Card.Header>
                         <Text content={article.title} weight="bold" />

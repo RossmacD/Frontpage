@@ -1,7 +1,14 @@
 import { API_URL } from '../config'
 
 
-const apiCall = ({ endpoint, onSuccess = (data) => console.log(data), onError = (err) => console.error(err) }) => fetch(`${API_URL}${endpoint}`)
+const apiCall = ({ endpoint, onSuccess = (data) => console.log(data), onError = (err) => console.error(err), method = 'GET', body }) => fetch(`${API_URL}${endpoint}`, {
+    method,
+    body,
+    headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+    }
+})
     .then(response => {
         if (response.status === 200) { return response.json() }
         console.error(response)
@@ -18,3 +25,7 @@ export const getCategories = (onSuccess) => {
 export const getArticles = (onSuccess) => {
     apiCall({ endpoint: `/api/articles`, onSuccess })
 }
+
+export const attemptLogin = (body, onSuccess, onError) => apiCall({ endpoint: `/api/login`, body, onSuccess, onError })
+export const attemptRegister = (body, onSuccess, onError) => apiCall({ endpoint: `/api/register`, body, onSuccess, onError })
+
