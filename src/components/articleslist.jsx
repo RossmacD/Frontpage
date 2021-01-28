@@ -1,33 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { getArticles } from '../data/api'
-import { Grid, Card, Text, Flex } from '@fluentui/react-northstar'
-
-
-// const listItems = [
-//     {
-//         key: 'irvin1g',
-//         header: 'Irving Kuhic',
-//         headerMedia: '7:26:56 AM',
-//         content: 'Program the sensor to the SAS alarm through the haptic SQL card!',
-//     }, {
-//         key: 'ir2ving',
-//         header: 'Irving Kuhic',
-//         headerMedia: '7:26:56 AM',
-//         content: 'Program the sensor to the SAS alarm through the haptic SQL card!',
-//     }, {
-//         key: 'irv3ing',
-//         header: 'Irving Kuhic',
-//         headerMedia: '7:26:56 AM',
-//         content: 'Program the sensor to the SAS alarm through the haptic SQL card!',
-//     }, {
-//         key: 'irv4ing',
-//         header: 'Irving Kuhic',
-//         headerMedia: '7:26:56 AM',
-//         content: 'Program the sensor to the SAS alarm through the haptic SQL card!',
-//     }
-// ]
+import { Grid, Card, Text, Flex, } from '@fluentui/react-northstar'
+import { UserContext } from './App/App'
+import { Link } from 'react-router-dom'
 const ArticleList = ({ filters, listArticles }) => {
-
+    const { selfState: { auth, user }, } = useContext(UserContext)
 
 
     return (
@@ -47,6 +24,7 @@ const ArticleList = ({ filters, listArticles }) => {
                     <Card.Header>
                         <Text content={article.title} weight="bold" />
                         <Text content={article.user.name} temporary />
+                        {auth && article.user.id === user.id ? (<Link to={'/articles/edit/' + article.id}>Edit</Link>) : ''}
                     </Card.Header>
                     <Card.Body>
                         <Flex column gap="gap.small">

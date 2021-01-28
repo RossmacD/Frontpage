@@ -1,5 +1,7 @@
 import { API_URL } from '../config'
-
+const authHeaders = {
+    Authorization: `Bearer ${localStorage.getItem('api_token')}`
+}
 
 const apiCall = ({ endpoint, onSuccess = (data) => console.log(data), onError = (err) => console.error(err), method = 'GET', body, headers = {} }) => fetch(`${API_URL}${endpoint}`, {
     method,
@@ -31,9 +33,11 @@ export const attemptLogin = (body, onSuccess, onError) => apiCall({ endpoint: `/
 export const attemptRegister = (body, onSuccess, onError) => apiCall({ endpoint: `/api/register`, body, onSuccess, onError, method: 'POST' })
 
 export const createArticle = (body, onSuccess, onError) => apiCall({
-    endpoint: `/api/articles`, body, onSuccess, onError, method: 'POST', headers: {
-        Authorization: `Bearer ${localStorage.getItem('api_token')}`
-    }
+    endpoint: `/api/articles`, body, onSuccess, onError, method: 'POST', headers: authHeaders
 })
-
+export const getArticle = (articleID, onSuccess, onError) => apiCall({
+    endpoint: `/api/articles/${articleID}`,
+    onSuccess,
+    onError
+})
 
