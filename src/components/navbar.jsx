@@ -17,32 +17,43 @@ const Navbar = () => {
     return (
         <Menu defaultActiveIndex={0} >
             <Menu.Item index={0}>
-                <Menu.ItemContent>
-                    <Link to={HOME_PATH}>
+                <Link to={HOME_PATH}>
+                    <Menu.ItemContent>
                         Home
-                    </Link>
                 </Menu.ItemContent>
+                </Link>
             </Menu.Item>
             {!auth ? (
                 <>
                     <Menu.Item index={1}>
-                        <Menu.ItemContent>
-                            <Link to={LOGIN_PATH}>
+                        <Link to={LOGIN_PATH}>
+                            <Menu.ItemContent>
                                 Login
-                    </Link>
-                        </Menu.ItemContent>
+                                </Menu.ItemContent>
+                        </Link>
                     </Menu.Item>
                     <Menu.Item index={2}>
-                        <Menu.ItemContent>
-                            <Link to={REGISTER_PATH}>
+                        <Link to={REGISTER_PATH}>
+                            <Menu.ItemContent>
                                 Register
-                    </Link>
-                        </Menu.ItemContent>
+                                </Menu.ItemContent>
+                        </Link>
                     </Menu.Item>
                 </>
-            ) : (<Menu.Item index={3}>
-                <Menu.ItemContent onClick={handleLogout}>Logout</Menu.ItemContent >
-            </Menu.Item>)}
+            ) : (
+                    <>
+                        <Menu.Item index={1}>
+                            <Link to={'/articles/new'}>
+                                <Menu.ItemContent>
+                                    Create Article
+                                </Menu.ItemContent>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item index={2}>
+                            <Menu.ItemContent onClick={handleLogout}>Logout</Menu.ItemContent >
+                        </Menu.Item>
+                    </>
+                )}
 
         </Menu>
     )

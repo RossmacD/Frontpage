@@ -1,4 +1,5 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useReducer, useState, useEffect } from 'react'
+import { getCategories } from '../../data/api'
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,9 +9,11 @@ import Navbar from '../navbar'
 import { Flex } from '@fluentui/react-northstar'
 
 import { LoginPage } from '../../pages/LoginPage'
+import { CreateArticlePage } from '../../pages/CreateArticle'
 import { HomePage } from '../../pages/HomePage'
 
 import { authReducer } from './authReducer'
+import { getArticles } from '../../data/api'
 
 export const UserContext = createContext()
 
@@ -20,6 +23,23 @@ function App() {
     user: null
   })
 
+  const [categories, setCategories] = useState([])
+  useEffect(() => {
+    getCategories((data) => {
+      setCategories(data)
+    })
+  }, [])
+
+
+
+  const [listArticles, setListArticles] = useState([])
+
+
+  useEffect(() => {
+    getArticles((articles) => {
+      setListArticles(articles)
+    })
+  }, [])
 
   return (
     <UserContext.Provider value={{ selfState, dispatch }}>
@@ -30,8 +50,12 @@ function App() {
             <Route path={`/login`}>
               <LoginPage />
             </Route>
+
+            <Route path={`/articles/new`}>
+              <CreateArticlePage categories={categories} setListArticles={setListArticles} />
+            </Route>
             <Route path="/">
-              <HomePage />
+              <HomePage categories={categories} listArticles={listArticles} />
             </Route>
           </Switch>
         </Flex>

@@ -26,24 +26,8 @@ import { Grid, Card, Text, Flex } from '@fluentui/react-northstar'
 //         content: 'Program the sensor to the SAS alarm through the haptic SQL card!',
 //     }
 // ]
-const ArticleList = ({ filters }) => {
-    const [listArticles, setListArticles] = useState([])
+const ArticleList = ({ filters, listArticles }) => {
 
-    // const mapArticlesToList = (data) => data.map(({ id, title, body, created_at }) => ({
-    //     key: id,
-    //     header: title,
-    //     headerMedia: created_at,
-    //     content: body
-    // }))
-
-
-    useEffect(() => {
-        getArticles((articles) => {
-            // console.log('articles', mapArticlesToList(articles))
-            // setListArticles(mapArticlesToList(articles))
-            setListArticles(articles)
-        })
-    }, [])
 
 
     return (
