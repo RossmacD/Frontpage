@@ -1,32 +1,20 @@
-import { ReactElement, useState, useRef } from 'react'
+import { useRef, useContext } from 'react'
+import { LOGIN } from './App/authReducer'
+import { UserContext } from './App/App'
 import { Form } from '@fluentui/react-northstar'
 import { attemptLogin } from '../data/api'
+import { useHistory } from "react-router-dom";
+
+
 export const LoginForm = () => {
     // Form Validation
     const emailInput = useRef(null)
     const passwordInput = useRef(null)
 
-    // Submission
-    // const [{ fetching }, login] = useLoginMutation()
+    const { dispatch } = useContext(UserContext)
+    const history = useHistory()
 
-    // const attemptLogin = (data) => {
-    //     // Get email and password from data
-    //     const { email, password } = data;
-    //     //Try to login
-    //     if (email && password) {
-    //         login({ email, password })
-    //             .then((all) => {
-    //                 // If theres a server error show in UI
-    //                 if (all.error) return setError("password", {
-    //                     type: "server",
-    //                     message: "Incorrect Password/Email"
-    //                 })
-    //                 // Process successful login
-    //                 // console.log(all)
-    //             })
-    //             .catch((err) => console.log(err))
-    //     }
-    // }
+
     const validateEmail = (email) => true
     const validatePassword = (password) => true
 
@@ -39,9 +27,12 @@ export const LoginForm = () => {
                 password
             },
                 (response) => {
-                    console.log(response)
                     //Add better auth code
-                    localStorage.setItem(response.data.api_token)
+                    dispatch({
+                        type: LOGIN,
+                        payload: response.data
+                    })
+                    history.push('/')
                 },
                 (err) => { console.error(err) }
             )
