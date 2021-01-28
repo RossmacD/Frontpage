@@ -40,6 +40,7 @@ export const LoginForm = () => {
             },
                 (response) => {
                     console.log(response)
+                    //Add better auth code
                     localStorage.setItem(response.data.api_token)
                 },
                 (err) => { console.error(err) }

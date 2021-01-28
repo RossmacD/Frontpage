@@ -1,45 +1,32 @@
-import { useState, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import Navbar from '../navbar'
-import Filters from '../filtersform'
-import ArticleList from '../articleslist'
-import { getCategories } from '../../data/api'
 import { Flex } from '@fluentui/react-northstar'
 
 import { LoginPage } from '../../pages/LoginPage'
+import { HomePage } from '../../pages/HomePage'
 
 
 function App() {
-  const [categories, setCategories] = useState([])
-  const [filters, setFilters] = useState({ categories: [], filters: 100 })
-  useEffect(() => {
-    getCategories((data) => {
-      setCategories(data)
-    })
-  }, [])
+
 
   return (
-    <div className="App">
-      <Router>
-        <Flex styles={{ minHeight: '100vh', flexDirection: 'column' }}>
-          <Navbar></Navbar>
-          <Switch>
-            <Route path={`/login`}>
-              <LoginPage />
-            </Route>
-            <Route path="/">
-              <Filters categories={categories} setFilters={setFilters} filters={filters} />
-              <ArticleList filters={filters}></ArticleList>
-            </Route>
-          </Switch>
-        </Flex>
-      </Router>
-    </div >
+    <Router className="App">
+      <Flex styles={{ minHeight: '100vh', flexDirection: 'column' }}>
+        <Navbar></Navbar>
+        <Switch>
+          <Route path={`/login`}>
+            <LoginPage />
+          </Route>
+          <Route path="/">
+            <HomePage />
+          </Route>
+        </Switch>
+      </Flex>
+    </Router>
   )
 }
 
