@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Button, ListItem, TextArea } from '@fluentui/react-northstar'
-import { editComment } from '../data/api'
+import { editComment, deleteComment } from '../data/api'
 
-export const Comment = ({ comment, auth, user }) => {
+export const Comment = ({ comment, auth, user, removeComment }) => {
     const [editing, setEditing] = useState(false)
     const [editedComment, setComment] = useState(comment.body)
 
@@ -23,7 +23,11 @@ export const Comment = ({ comment, auth, user }) => {
                     setEditing(true)
                 }
             }}>{editing ? 'Save' : 'Edit'}</Button>
-            <Button>Delete</Button>
+            <Button onClick={() => {
+                deleteComment(comment.id, () => {
+                    removeComment(comment.id)
+                })
+            }}>Delete</Button>
         </div>)
 
     return (

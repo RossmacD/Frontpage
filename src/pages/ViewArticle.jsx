@@ -34,11 +34,15 @@ export const ViewArticlePage = ({ categories, setListArticles }) => {
         })
     }
 
-    // items={article.comments.map((comment) => ({
-    //     key: comment.id,
-    //     content: comment.body,
-    //     contentMedia: auth && comment.user_id === user.id ? (<><Button>Edit</Button> <Button>Delete</Button></>) : comment.created_at
-    // }))}
+
+    const removeComment = (commentId) => {
+        setArticle(article => ({
+            ...article,
+            comments: article.comments.filter(comment => comment.id !== commentId)
+        }))
+    }
+
+
     return (
         <Flex styles={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
             {article ? (
@@ -56,7 +60,9 @@ export const ViewArticlePage = ({ categories, setListArticles }) => {
                         <Flex column gap="gap.small">
                             <Text weight={'bold'}>Comments</Text>
                             <List >
-                                {article.comments.map((comment) => (<Comment key={comment.id} comment={comment} auth={auth} user={user} />))}
+                                {article.comments.map((comment) => (
+                                    <Comment key={comment.id} comment={comment} auth={auth} user={user} removeComment={removeComment} />
+                                ))}
                             </List>
                             <TextArea
                                 fluid
