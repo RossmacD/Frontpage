@@ -52,7 +52,7 @@ export const ViewArticlePage = ({ categories, setListArticles }) => {
                             <List items={article.comments.map((comment) => ({
                                 key: comment.id,
                                 content: comment.body,
-                                contentMedia: auth && comment.user_id === user.id ? (<Button>Edit</Button>) : comment.created_at
+                                contentMedia: auth && comment.user_id === user.id ? (<><Button>Edit</Button> <Button>Delete</Button></>) : comment.created_at
                             }))}></List>
                             <TextArea
                                 fluid

@@ -67,7 +67,7 @@ function App() {
 
 
             <Route path="/">
-              <HomePage categories={categories} listArticles={listArticles} />
+              <HomePage categories={categories} listArticles={listArticles} setListArticles={setListArticles} />
             </Route>
           </Switch>
         </Flex>

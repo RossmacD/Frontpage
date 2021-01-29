@@ -13,7 +13,11 @@ const apiCall = ({ endpoint, onSuccess = (data) => console.log(data), onError = 
     }
 })
     .then(response => {
-        if (response.status === 200 || response.status === 201) { return response.json() }
+        if (response.status === 200 || response.status === 201) {
+            return response.json()
+        } else if (response.status === 204) {
+            return
+        }
         console.error(response)
         throw new Error('Invalid Response')
     })
@@ -49,6 +53,11 @@ export const editArticle = (articleID, body, onSuccess, onError) => apiCall({
 })
 
 
+export const deleteArticle = (articleID, onSuccess, onError) => apiCall({
+    endpoint: `/api/articles/${articleID}`, onSuccess, onError, method: 'DELETE', headers: authHeaders()
+})
+
+
 export const getComments = (onSuccess) => {
     apiCall({ endpoint: `/api/comments`, onSuccess })
 }
@@ -61,4 +70,8 @@ export const getComment = (articleID, onSuccess, onError) => apiCall({
     endpoint: `/api/comments/${articleID}`,
     onSuccess,
     onError
+})
+
+export const deleteComment = (articleID, onSuccess, onError) => apiCall({
+    endpoint: `/api/articles/${articleID}`, onSuccess, onError, method: 'DELETE', headers: authHeaders()
 })
