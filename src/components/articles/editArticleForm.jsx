@@ -1,7 +1,7 @@
 import { useRef, useContext, useState, useEffect } from 'react'
 import { UserContext } from '../App/App'
 import { Form, TextArea } from '@fluentui/react-northstar'
-import { createArticle, getArticle } from '../../data/api'
+import { editArticle, getArticle } from '../../data/api'
 import { useHistory } from "react-router-dom";
 import { camel2Sentence } from '../../utils/capitalise'
 import { useParams } from 'react-router-dom'
@@ -47,7 +47,7 @@ export const EditArticleForm = ({ categories, setListArticles }) => {
         const title = titleInput.current.value;
         console.log('body: ', body)
         if (auth && validateTitle(title) && validateBody(body)) {
-            createArticle({
+            editArticle(id, {
                 title,
                 body,
                 category_id: categorySelected
@@ -55,7 +55,11 @@ export const EditArticleForm = ({ categories, setListArticles }) => {
                 (response) => {
                     console.log(response, user, categories)
                     // Attach new Article with self as user and category - found by id
-                    setListArticles((currentArticles) => [...currentArticles, { ...response, user, category: categories.find((category) => category.id === response.category_id) }])
+                    setListArticles((currentArticles) => {
+                        const index = currentArticles.findIndex((article) => article.id === response.id)
+                        currentArticles[index] = { ...response, user, category: categories.find((category) => category.id === response.category_id) }
+                        return [...currentArticles]
+                    })
                     history.push('/')
                 },
                 (err) => { console.error(err) }

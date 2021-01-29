@@ -7,10 +7,10 @@ export const ViewArticlePage = ({ categories, setListArticles }) => {
     const { selfState: { auth, user }, } = useContext(UserContext)
     const { id } = useParams()
     const [article, setArticle] = useState(null)
+
     useEffect(() => {
         if (id) {
             getArticle(id, (response) => {
-                console.log('Response', response)
                 setArticle(response)
             })
         }
