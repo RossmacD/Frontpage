@@ -53,12 +53,12 @@ export const getComments = (onSuccess) => {
     apiCall({ endpoint: `/api/comments`, onSuccess })
 }
 
-
 export const createComment = (body, onSuccess, onError) => apiCall({
-    endpoint: `/api/articles`, body, onSuccess, onError, method: 'POST', headers: authHeaders()
+    endpoint: `/api/comments`, body, onSuccess, onError, method: 'POST', headers: authHeaders()
 })
+
 export const getComment = (articleID, onSuccess, onError) => apiCall({
-    endpoint: `/api/articles/${articleID}`,
+    endpoint: `/api/comments/${articleID}`,
     onSuccess,
     onError
 })

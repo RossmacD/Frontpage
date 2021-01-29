@@ -87,14 +87,10 @@ export const EditArticleForm = ({ categories, setListArticles }) => {
         return radioButtons
     }
 
-
-
-
-
     return (
         <Form onSubmit={handleCreate} styles={{ justifyContent: 'start', width: 'auto', margin: '1rem 2rem' }}>
             <Form.Input type='title' label='Title' name='title' ref={titleInput} value={title}></Form.Input>
-            <TextArea type='body' label='Body' resize='both' name='body' onChange={setBody} ref={boieInput} value={body}></TextArea>
+            <TextArea type='text' label='Body' resize='both' name='body' onChange={setBody} ref={boieInput} value={body}></TextArea>
             <Form.RadioGroup label="Categories" vertical items={generateRadioButtons(categories)} />
             <Form.Button content="Submit" loading={false} disabled={false} fluid primary />
         </Form>

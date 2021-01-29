@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from 'react'
 import { Grid, Card, Text, Flex, List, Button, TextArea } from '@fluentui/react-northstar'
 import { UserContext } from '../components/App/App'
-import { getArticle } from '../data/api'
+import { getArticle, createComment } from '../data/api'
 import { Link, useParams } from 'react-router-dom'
+
 export const ViewArticlePage = ({ categories, setListArticles }) => {
     const { selfState: { auth, user }, } = useContext(UserContext)
     const { id } = useParams()
@@ -15,6 +16,21 @@ export const ViewArticlePage = ({ categories, setListArticles }) => {
             })
         }
     }, [id])
+
+
+    const [comment, setComment] = useState('')
+
+    const setCommentHandler = (e) => {
+        setComment(e.target.value)
+    }
+    const submitComment = () => {
+        createComment({
+            body: comment,
+            article_id: id
+        }, (response) => {
+            setArticle(currentArticle => ({ ...currentArticle, comments: [...currentArticle.comments, response] }))
+        })
+    }
 
 
     return (
@@ -38,9 +54,13 @@ export const ViewArticlePage = ({ categories, setListArticles }) => {
                                 content: comment.body,
                                 contentMedia: auth && comment.user_id === user.id ? (<Button>Edit</Button>) : comment.created_at
                             }))}></List>
-                            <TextArea fluid placeholder={auth ? 'Comment' : 'You must be logged in to comment'}></TextArea>
-                            <Button disabled={!auth}>Add Comment</Button>
-
+                            <TextArea
+                                fluid
+                                placeholder={auth ? 'Comment' : 'You must be logged in to comment'}
+                                name='comment'
+                                onChange={setCommentHandler}
+                            ></TextArea>
+                            <Button disabled={!auth} onClick={submitComment}>Add Comment</Button>
                         </Flex>
                     </Card.Body>
                 </Card>
