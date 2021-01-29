@@ -66,12 +66,18 @@ export const createComment = (body, onSuccess, onError) => apiCall({
     endpoint: `/api/comments`, body, onSuccess, onError, method: 'POST', headers: authHeaders()
 })
 
-export const getComment = (articleID, onSuccess, onError) => apiCall({
-    endpoint: `/api/comments/${articleID}`,
+export const getComment = (commentId, onSuccess, onError) => apiCall({
+    endpoint: `/api/comments/${commentId}`,
     onSuccess,
     onError
 })
 
-export const deleteComment = (articleID, onSuccess, onError) => apiCall({
-    endpoint: `/api/articles/${articleID}`, onSuccess, onError, method: 'DELETE', headers: authHeaders()
+export const editComment = (commentId, body, onSuccess, onError) => apiCall({
+    endpoint: `/api/comments/${commentId}`, body, onSuccess, onError, method: 'PUT', headers: authHeaders()
+})
+
+
+
+export const deleteComment = (commentId, onSuccess, onError) => apiCall({
+    endpoint: `/api/comments/${commentId}`, onSuccess, onError, method: 'DELETE', headers: authHeaders()
 })

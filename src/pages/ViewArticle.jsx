@@ -3,6 +3,8 @@ import { Grid, Card, Text, Flex, List, Button, TextArea } from '@fluentui/react-
 import { UserContext } from '../components/App/App'
 import { getArticle, createComment } from '../data/api'
 import { Link, useParams } from 'react-router-dom'
+import { Comment } from '../components/comment'
+
 
 export const ViewArticlePage = ({ categories, setListArticles }) => {
     const { selfState: { auth, user }, } = useContext(UserContext)
@@ -32,7 +34,11 @@ export const ViewArticlePage = ({ categories, setListArticles }) => {
         })
     }
 
-
+    // items={article.comments.map((comment) => ({
+    //     key: comment.id,
+    //     content: comment.body,
+    //     contentMedia: auth && comment.user_id === user.id ? (<><Button>Edit</Button> <Button>Delete</Button></>) : comment.created_at
+    // }))}
     return (
         <Flex styles={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
             {article ? (
@@ -49,11 +55,9 @@ export const ViewArticlePage = ({ categories, setListArticles }) => {
                         </Flex>
                         <Flex column gap="gap.small">
                             <Text weight={'bold'}>Comments</Text>
-                            <List items={article.comments.map((comment) => ({
-                                key: comment.id,
-                                content: comment.body,
-                                contentMedia: auth && comment.user_id === user.id ? (<><Button>Edit</Button> <Button>Delete</Button></>) : comment.created_at
-                            }))}></List>
+                            <List >
+                                {article.comments.map((comment) => (<Comment key={comment.id} comment={comment} auth={auth} user={user} />))}
+                            </List>
                             <TextArea
                                 fluid
                                 placeholder={auth ? 'Comment' : 'You must be logged in to comment'}
