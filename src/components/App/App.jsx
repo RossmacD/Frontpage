@@ -11,6 +11,7 @@ import { Flex } from '@fluentui/react-northstar'
 import { LoginPage } from '../../pages/LoginPage'
 import { CreateArticlePage } from '../../pages/CreateArticle'
 import { EditArticlePage } from '../../pages/EditArticle'
+import { ViewArticlePage } from '../../pages/ViewArticle'
 import { HomePage } from '../../pages/HomePage'
 
 import { authReducer } from './authReducer'
@@ -59,6 +60,11 @@ function App() {
             <Route path={`/articles/edit/:id`}>
               <EditArticlePage categories={categories} setListArticles={setListArticles} />
             </Route>
+
+            <Route path={`/articles/:id`}>
+              <ViewArticlePage categories={categories} />
+            </Route>
+
 
             <Route path="/">
               <HomePage categories={categories} listArticles={listArticles} />

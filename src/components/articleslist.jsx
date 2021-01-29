@@ -22,7 +22,9 @@ const ArticleList = ({ filters, listArticles }) => {
             ).slice(0, filters.pages).map((article) => (
                 <Card fluid>
                     <Card.Header>
-                        <Text content={article.title} weight="bold" />
+                        <Link to={`/articles/${article.id}`}>
+                            <Text content={article.title} weight="bold" />
+                        </Link>
                         <Text content={article.user.name} temporary />
                         {auth && article.user.id === user.id ? (<Link to={'/articles/edit/' + article.id}>Edit</Link>) : ''}
                     </Card.Header>
@@ -33,8 +35,9 @@ const ArticleList = ({ filters, listArticles }) => {
                         </Flex>
                     </Card.Body>
                 </Card>
-            ))}
-        </Flex>
+            ))
+            }
+        </Flex >
     )
 }
 
